@@ -1,6 +1,7 @@
 package com.ell.lyawear.home;
 
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
@@ -17,6 +18,7 @@ public class MessageService extends WearableListenerService {
             Intent messageIntent = new Intent();
             messageIntent.setAction(Intent.ACTION_SEND);
             messageIntent.putExtra("message", message);
+            Log.d("LYA", "Modulo App, MessageService");
             //Broadcast the received Data Layer messages locally//
             LocalBroadcastManager.getInstance(this).sendBroadcast(messageIntent);
         }

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -40,6 +41,7 @@ open class HomeActivity : AppCompatActivity() {
     open fun messageText(newInfo: String) {
         if (newInfo.compareTo("") != 0) {
             binding.text.append("\n" + newInfo)
+            Log.d("LYA", "Modulo App, Home: $newInfo")
         }
     }
 }

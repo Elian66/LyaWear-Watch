@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.util.Log
 import com.ell.lyawatch.databinding.ActivityHomeBinding
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
@@ -22,8 +23,8 @@ class HomeActivity : Activity() {
 
     var hours = cal[Calendar.HOUR_OF_DAY]
     var minutes = cal[Calendar.MINUTE]
-    val secs = cal[Calendar.SECOND]
-    val ms = cal[Calendar.MILLISECOND]
+    private val secs = cal[Calendar.SECOND]
+    private val ms = cal[Calendar.MILLISECOND]
 
     var dayNumber = DateFormat.format("dd", date) as String
     var monthNumber = DateFormat.format("MM", date) as String
@@ -50,6 +51,7 @@ class HomeActivity : Activity() {
         binding.text.text = sentData
 
         val dataPath = "/lya_path"
+        Log.d("LYA", "Modulo Watch 01: $sentData")
         SendMessage(this, dataPath, sentData).start()
     }
 
@@ -60,26 +62,22 @@ class HomeActivity : Activity() {
     }
 
     private fun getTime(): String {
-        val tHour: String
-        val tMins: String
-        val tSecs: String
-        val tMs: String
-        tHour = if (hours < 10) {
+        val tHour: String = if (hours < 10) {
             "0$hours"
         } else {
             hours.toString()
         }
-        tMins = if (minutes < 10) {
+        val tMins: String = if (minutes < 10) {
             "0$minutes"
         } else {
             minutes.toString()
         }
-        tSecs = if (secs < 10) {
+        val tSecs: String = if (secs < 10) {
             "0$secs"
         } else {
             secs.toString()
         }
-        tMs = if (ms < 100) {
+        val tMs: String = if (ms < 100) {
             if (ms < 10) {
                 "00$ms"
             } else {
@@ -108,6 +106,7 @@ internal class SendMessage (
                 //Send the message///
                 val sendMessageTask: Task<Int> = Wearable.getMessageClient(context)
                     .sendMessage(node.id, path, message.toByteArray())
+                Log.d("LYA", "Modulo Watch 02: $message")
                 try {
                     val result = Tasks.await<Int>(sendMessageTask)
                     //Handle the errors//
